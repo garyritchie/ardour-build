@@ -1,0 +1,8 @@
+version: '2.1'
+
+services:
+  ardour-build:
+    image: ardour-build
+    build: .
+    volumes:
+      - ./build:/build
