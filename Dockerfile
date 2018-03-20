@@ -36,7 +36,8 @@ RUN apt-get -y update && apt-get install -y \
   vamp-plugin-sdk
 
 RUN apt-get install -y \
-  git
+  git \
+  apt-utils
 
 VOLUME [ "/build" ]
 
