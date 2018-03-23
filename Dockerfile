@@ -1,12 +1,15 @@
 
-FROM ubuntu:xenial
+FROM ubuntu:18.04
 LABEL Name=ardour-build Version=0.0.1
 
 ENV XARCH=x86_64
 ENV ROOT=/ardour
-ENV MAKEFLAGS=-j2
+ENV MAKEFLAGS=-j4
 
 RUN apt-get -y update && apt-get install -y \
+  wget \
+  git \
+  apt-utils \
   glibmm-2.4-dev \
   # jack \
   # jackd \
@@ -35,9 +38,7 @@ RUN apt-get -y update && apt-get install -y \
   # qjackctl \
   vamp-plugin-sdk
 
-RUN apt-get install -y \
-  git \
-  apt-utils
+# RUN apt-get install -y \
 
 VOLUME [ "/build" ]
 
@@ -50,7 +51,11 @@ RUN git checkout tags/5.12
   # && ./waf configure --with-backends=dummy --test \
   # && ./waf build test
 
-RUN /ardour/tools/x-win/compile.sh
+RUN wget http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.28.tar.gz
+RUN tar -xzvf libsndfile-1.0.28.tar.gz libsndfile-1.0.28
+RUN cd libsndfile-1.0.28 && configure && make && make install
+
+# RUN /ardour/tools/x-win/compile.sh
 
 
 # CMD /usr/games/fortune -a | cowsay

@@ -1,7 +1,7 @@
 version: '2.1'
 
 services:
-  ardour-build:
+  ubuntu:
     image: ardour-build
     build: .
     volumes:
